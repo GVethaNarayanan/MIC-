@@ -13,7 +13,7 @@ from datetime import datetime
 from dataclasses import dataclass, field
 from typing import Optional
 
-import speech_recognition as sr
+#import speech_recognition as sr
 from googletrans import Translator
 from gtts import gTTS
 
