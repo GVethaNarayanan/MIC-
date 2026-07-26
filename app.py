@@ -368,6 +368,10 @@ if __name__ == "__main__":
     init_modules()
 
     port = int(os.environ.get("PORT", 5000))
+    # Force port 7860 on Hugging Face Spaces (required by Gradio SDK)
+    if "SPACE_ID" in os.environ:
+        port = 7860
+
     print(f"\n{'='*50}")
     print(f"  {APP_TITLE} {APP_VERSION}")
     print(f"  http://127.0.0.1:{port}")
