@@ -367,9 +367,10 @@ def api_datasets_stats():
 if __name__ == "__main__":
     init_modules()
 
+    port = int(os.environ.get("PORT", 5000))
     print(f"\n{'='*50}")
     print(f"  {APP_TITLE} {APP_VERSION}")
-    print(f"  http://127.0.0.1:5000")
+    print(f"  http://127.0.0.1:{port}")
     print(f"{'='*50}\n")
 
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(host="0.0.0.0", port=port, debug=False)
