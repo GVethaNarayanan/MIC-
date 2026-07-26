@@ -1,4 +1,16 @@
+---
+title: Mic Translator
+emoji: 🌍
+colorFrom: indigo
+colorTo: purple
+sdk: gradio
+sdk_version: 4.19.2
+app_file: app.py
+pinned: false
+---
+
 # MIC Translator – Offline AI-Powered Real-Time Multilingual Voice Translation System
+
 
 MIC Translator v3.0 is a production-grade, modular translation system. It performs high-precision voice transcription, text correction, automatic source language detection, offline/online hybrid text-to-speech synthesis, and multi-language translation entirely on your local machine.
 
