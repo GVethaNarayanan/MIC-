@@ -10,6 +10,15 @@ from typing import Dict, Any, Optional
 from config import NLLB_MODEL_NAME, NLLB_LANGS, LANGUAGE_NAMES, NLLB_TO_ISO
 
 
+try:
+    import spaces
+    @spaces.GPU
+    def dummy_gpu_func():
+        pass
+except ImportError:
+    pass
+
+
 class Translator:
     """Offline translation using Meta NLLB-200."""
 
