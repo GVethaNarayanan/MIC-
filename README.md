@@ -1,117 +1,92 @@
-# MIC Translator Dashboard
+# MIC Translator – Offline AI-Powered Real-Time Multilingual Voice Translation System
 
-> AI-Powered Real-Time Multilingual Voice Translation System
+MIC Translator v3.0 is a production-grade, modular translation system. It performs high-precision voice transcription, text correction, automatic source language detection, offline/online hybrid text-to-speech synthesis, and multi-language translation entirely on your local machine.
 
 ---
 
 ## 🚀 Quick Start
 
 ### Step 1 — Install Dependencies
+Run the install batch script to set up packages (Flask, Whisper, NLLB-200, Piper support, and dependencies):
 ```bat
 install.bat
 ```
-This installs all Python packages including Whisper, SpeechRecognition, gTTS, pygame, and googletrans.
 
-### Step 2 — Launch the Dashboard
+### Step 2 — Start the Translation Dashboard
+Launch the server:
 ```bat
 run_dashboard.bat
 ```
-Then open: **http://localhost:8501**
+Then open your web browser at: **[http://localhost:5000](http://localhost:5000)**
 
 ---
 
-## 📁 Project Structure
+## 📁 Modular Project Structure
 
 ```
 MIC dashboard/
-├── app.py                  ← Streamlit dashboard (main entry point)
-├── translator_engine.py    ← Core AI backend (SR + Translation + TTS + Audio)
-├── config.py               ← Languages map + app constants
-├── styles.py               ← Injected CSS (dark AI theme)
-├── requirements.txt        ← Python dependencies
-├── install.bat             ← One-click installer (Windows)
-├── run_dashboard.bat       ← One-click launcher (Windows)
-├── .streamlit/
-│   └── config.toml         ← Streamlit theme + server config
+├── app.py                  ← Clean Flask router (routes & endpoints)
+├── config.py               ← App configuration & NLLB-200 language mapping
+├── speech.py               ← Offline Speech-to-Text (OpenAI Whisper)
+├── translator.py           ← Offline Translation Engine (Meta NLLB-200)
+├── language_detector.py    ← Offline language script analysis
+├── correction_engine.py    ← Real-time slang/short-form/spoken-word correction pipeline
+├── dataset_loader.py       ← FLORES, OPUS, Tatoeba, and custom dataset manager
+├── history.py              ← Saved translations, favorites, CSV/JSON exports, and analytics
+├── tts.py                  ← Hybrid TTS (Offline Piper + Online gTTS fallback)
+├── static/
+│   ├── app.js              ← Searchable selection, recorder, history, & status polling
+│   └── style.css           ← Premium dark mode user interface
+├── templates/
+│   └── index.html          ← Main dashboard markup
+├── datasets/
+│   ├── custom/             ← Directory for custom parallel translation files (JSON/CSV)
+│   └── corrections.json    ← 180+ pre & post-translation correction dictionary rules
+├── tests/
+│   └── test_all.py         ← 80-test verification suite
 └── README.md
 ```
 
 ---
 
-## 🎙 Features
-
-| Feature | Technology |
-|---|---|
-| Speech Recognition | Whisper AI (with Google SR fallback) |
-| Translation Engine | googletrans (Google Translate API) |
-| Text-to-Speech | gTTS (Google TTS) |
-| Audio Playback | pygame.mixer |
-| Dashboard | Streamlit |
-| 90+ Languages | Google Translate language codes |
-
----
-
-## ⚙️ Requirements
-
-- **Python** 3.9 or higher
-- **FFmpeg** — required for Whisper AI ([download here](https://ffmpeg.org/download.html))
-  - Add `ffmpeg/bin` to your system PATH
-  - Without FFmpeg, the app falls back to Google Speech Recognition
-- **Microphone** — any USB or built-in mic
-- **Internet** — for translation API and gTTS
-
----
-
-## 🌐 Supported Languages (90+)
-
-The app dynamically supports all Google Translate languages including:
-- English, Hindi, French, German, Spanish, Italian
-- Arabic, Chinese (Simplified/Traditional), Japanese, Korean
-- Portuguese, Russian, Ukrainian, Polish, Turkish
-- And 75+ more — selectable from the sidebar dropdown
-
----
-
-## 🔧 Settings (Sidebar)
-
-| Setting | Description |
-|---|---|
-| Target Language | Select from 90+ languages |
-| Mic Sensitivity | Energy threshold (50–3000) |
-| Pause Threshold | Silence before phrase ends (0.3–3.0s) |
-| Slow TTS | Slower speech synthesis |
-| Auto-Play Audio | Automatically play translated audio |
-
----
-
-## 🛠 Troubleshooting
-
-| Issue | Fix |
-|---|---|
-| `PyAudio` install fails | Run `pip install pipwin` then `pipwin install pyaudio` |
-| Whisper not available | App auto-falls back to Google SR |
-| No audio playback | Check pygame install; system audio must be available |
-| Translation fails | Check internet connection |
-| Mic not detected | Check OS mic permissions + select correct device |
-
----
-
-## 📊 Workflow
+## 🎙️ Core Pipelines
 
 ```
-Microphone Input
-    ↓
-Speech Recognition (Whisper AI / Google SR)
-    ↓
-Real-Time Translation (googletrans)
-    ↓
-Text-to-Speech (gTTS)
-    ↓
-Audio Playback (pygame)
-    ↓
-Live Dashboard Display (Streamlit)
+Voice Speech
+     ↓
+OpenAI Whisper (Offline STT)
+     ↓
+Correction Engine (Pre-translation cleanup: slang, abbreviations)
+     ↓
+Language Detector (Script/Heuristic auto-detection)
+     ↓
+Meta NLLB-200 (Offline Translation)
+     ↓
+Correction Engine (Post-translation refinement)
+     ↓
+TTS Engine (Offline Piper Voice -> fall back to gTTS Online)
 ```
 
 ---
-redeploy update
-*Built for enterprise multilingual communication demos.*
+
+## ⚙️ Requirements & Offline Compatibility
+
+* **Python:** Version 3.9 or higher
+* **FFmpeg:** Required for offline Whisper audio processing ([Download FFmpeg](https://ffmpeg.org/download.html)) and added to your system's `PATH`.
+* **Microphone:** Built-in or external mic.
+* **Fully Offline Support:** 
+  * **Speech Recognition:** 100% Offline (Whisper base model).
+  * **Translation:** 100% Offline (NLLB-Distilled-600M).
+  * **Text-to-Speech:** Offline voice synthesis is configured for **English (`en`)** and **Hindi (`hi`)** using local Piper ONNX files.
+  * **Adding Offline Voices:** To speak other languages offline, download `.onnx` and `.json` model files from the [Piper Repository](https://huggingface.co/rhasspy/piper-voices/tree/main) and drop them inside the `voices/` directory. If a local model is not present, the system automatically uses the online `gTTS` fallback to speak.
+
+---
+
+## 🧪 Verification
+
+Run the automated test suite to verify configuration, translation, history caching, script detection, and corrector pipeline components:
+```bash
+python tests/test_all.py
+```
+
+*Built for high-performance offline voice and text translation.*

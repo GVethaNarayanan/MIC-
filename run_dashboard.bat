@@ -1,11 +1,13 @@
 @echo off
-echo =====================================================
-echo   MIC Translator Dashboard — Starting...
-echo =====================================================
+title MIC Translator - Starting...
 echo.
-echo  Dashboard URL: http://localhost:8501
-echo  Press Ctrl+C to stop the server.
+echo  ============================================
+echo   MIC Translator v2.0  ^|  Launching...
+echo  ============================================
+echo.
+echo  Open your browser at: http://localhost:5000
+echo  Share with others  : http://YOUR-IP:5000
 echo.
 cd /d "%~dp0"
-streamlit run app.py --server.port 8501 --server.headless false --theme.base dark
+python app.py
 pause

@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.env
+
+# Project specific
+data/
+voices/*.onnx
+voices/*.json
+static/audio/*.wav
+static/audio/*.mp3
+static/audio/temp_tts.txt
+temp_audio.wav
+temp_tts.txt
+.vscode/
+.idea/
+*.log
